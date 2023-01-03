@@ -15,52 +15,39 @@ class PharmacyController extends Controller
    */
   public function index(Request $request)
   {
-    $data = \Geo::get($request->ip);
+    $data = \Geo::get('41.190.94.108'); // $request->ip
 
     $lat = $data->latitude;
     $lng = $data->longitude;
 
     // dd(Pharmacy::ClosestTo($data->latitude, $data->longitude)->get());
 
-    // $data = DB::table("pharmacies")
-    //   ->select(
-    //     "id",
-    //     "name",
-    //     DB::raw("SUBSTR(name  ) as alpha, 6371 * acos(cos(radians(" . $lat . "))
-    //             * cos(radians(lat))
-    //             * cos(radians(lng) - radians(" . $lng . "))
-    //             + sin(radians(" . $lat . "))
-    //             * sin(radians(lat))) AS distance")
-
-    //   )
-
-    $data = DB::table('pharmacies')
-      ->select('name', DB::raw("MIN(address) as address"), DB::raw("MIN(lat) as lat"), DB::raw("MIN(lng) as lng"), DB::raw("SUBSTR(NAME, 1, 1) as name_initial"), DB::raw("(3959 * ACOS(COS(RADIANS(MIN(lat))) * COS(RADIANS(33.3564)) * COS(RADIANS(-122.3265) - RADIANS(MIN(lng))) + SIN(RADIANS(MIN(lat))) * SIN(RADIANS(33.3564)))) as distance"))
-      ->where('name', '!=', 'a')
+    /*$data = DB::table('pharmacies')
+      ->select('name', DB::raw("MIN(address) as address"), DB::raw("SUBSTR(NAME, 1, 1) as name_initial"), DB::raw("(3959 * ACOS(COS(RADIANS(MIN(lat))) * COS(RADIANS(33.3564)) * COS(RADIANS(-122.3265) - RADIANS(MIN(lng))) + SIN(RADIANS(MIN(lat))) * SIN(RADIANS(33.3564)))) as distance"))
+      // ->where('name', '!=', 'a')
       ->groupBy('name', 'name_initial')
       ->orderBy('distance', 'asc')
-      ->get();
+      ->limit(6)
+      ->get();*/
 
-    dd($data);
+    $data = DB::table('pharmacies')
+    ->select(
+      'name',
+      DB::raw("SUBSTR(NAME, 1, 1) as name_initial"), DB::raw("
+      (ACOS(COS(RADIANS(90-$lat))
+       * COS(RADIANS(90-lat))
+       + SIN(RADIANS(90-$lat))
+       * SIN(RADIANS(90-lat))
+       * COS(RADIANS($lng-lng)))
+       * 6371) AS distance
+    "))
+    ->orderBy('DISTANCE','asc')
+    ->limit(6)
+    ->get();
 
     return view('index', [
       'data' => $data
     ]);
-
-    // $lat = YOUR_CURRENT_LATTITUDE;
-    // $lng = YOUR_CURRENT_LONGITUDE;
-
-    // $data = DB::table("users")
-    //   ->select(
-    //     "users.id",
-    //     DB::raw("6371 * acos(cos(radians(" . $lat . "))
-    //             * cos(radians(users.lat))
-    //             * cos(radians(users.lng) - radians(" . $lng . "))
-    //             + sin(radians(" . $lat . "))
-    //             * sin(radians(users.lat))) AS distance")
-    //   )
-    //   ->groupBy("users.id")
-    //   ->get();
   }
 
   /**

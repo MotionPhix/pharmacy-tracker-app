@@ -59,7 +59,11 @@
 
       <section class="max-w-md mx-auto mt-12 flex justify-center">
 
-        <Link href="{{ route('pharmacies.search') }}" modal class="bg-indigo-600 hover:bg-indigo-400 transition duration-500 text-indigo-100 flex justify-center items-center w-64 h-16 font-semibold text-2xl rounded-2xl">
+        <Link
+          class="bg-indigo-600 hover:bg-indigo-400 transition duration-500 text-indigo-100 flex justify-center items-center w-64 h-16 font-semibold text-2xl rounded-2xl"
+          href="{{ route('pharmacies.search') }}"
+          modal
+        >
           Try it now.
         </Link>
 
@@ -73,7 +77,7 @@
 
     <span>
       <Link href="/">
-      <AppLogo class="h-16 w-auto text-gray-700 dark:text-gray-200 sm:h-20" />
+        <AppLogo class="h-16 w-auto text-gray-700 dark:text-gray-200 sm:h-20" />
       </Link>
     </span>
 
@@ -85,8 +89,12 @@
 
       <span class="flex-1" />
 
-      <Link href="{{ route('pharmacies.search') }}" modal class="bg-gray-300 rounded-lg hover:bg-gray-400 hover:text-gray-50 transition duration-500 p-1.5">
-      <SearchIcon class="h-5 w-5" />
+      <Link
+        class="bg-gray-300 rounded-lg hover:bg-gray-400 hover:text-gray-50 transition duration-500 p-1.5"
+        href="{{ route('pharmacies.search') }}"
+        modal
+      >
+        <SearchIcon class="h-5 w-5" />
       </Link>
     </header>
 
@@ -138,9 +146,9 @@
       </div>
     </div>
 
-    <div class="mt-6">
+    {{-- <div class="mt-6">
       {{$data->links()}}
-    </div>
+    </div> --}}
 
     @endif
   </div>
