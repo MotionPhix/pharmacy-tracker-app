@@ -1,0 +1,32 @@
+const withAnimations = require('animated-tailwindcss')
+
+/** @type {import('tailwindcss').Config} */
+module.exports = withAnimations({
+  darkMode: 'class',
+
+  content: [
+    './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
+    './vendor/protonemedia/laravel-splade/lib/**/*.vue',
+    './vendor/protonemedia/laravel-splade/resources/views/**/*.blade.php',
+    './storage/framework/views/*.php',
+    './resources/views/**/*.blade.php',
+    './resources/js/**/*.vue',
+  ],
+
+  theme: {
+    extend: {},
+    fontFamily: {
+      sans: 'DM Sans',
+    },
+  },
+
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+    require('tailwindcss-scrollbar'),
+  ],
+
+  variants: {
+    scrollbar: ['dark'],
+  },
+})

@@ -1,0 +1,13 @@
+@tailwind base;
+
+@tailwind components;
+
+.btn {
+  @apply py-1.5 px-2 transition duration-500 bg-orange-50 rounded flex items-center gap-2 font-semibold
+}
+
+.btn-red {
+  @apply bg-red-600 text-gray-100
+}
+
+@tailwind utilities;
